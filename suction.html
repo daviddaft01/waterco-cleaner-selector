@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Suction Cleaner Selector</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#f3f7fc}
+a{color:#1565c0}a:hover{color:#0b2e59}
+select:focus,button:focus-visible,a:focus-visible{outline:3px solid #ffb547;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #f3f7fc; color: #0b2e59; font-family: 'Inter', system-ui, sans-serif">
+  <header style="background: #0b4f9c; color: #FFFFFF; position: relative; overflow: hidden">
+    <svg aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none" style="position: absolute; left: 0; bottom: 0; width: 100%; height: 60px; opacity: 0.25"><path d="M0 70 C240 20 480 110 720 60 C960 10 1200 100 1440 50 L1440 120 L0 120 Z" fill="#7cc4ff"></path></svg>
+    <div style="position: relative; max-width: 1360px; margin: 0 auto; padding: 22px 32px 26px; box-sizing: border-box; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px">
+        <div style="flex: none; background: #FFFFFF; border-radius: 10px; padding: 8px 14px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.12)"><img src="images/waterco-advance-logo.png" alt="Waterco Advance" style="height: 64px; width: auto; display: block"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <div style="font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Trade counter &amp; field · AU &amp; NZ · Stage 2: suction cleaners (draft)</div>
+          <h1 style="margin: 0; font-size: 42px; font-weight: 800; line-height: 1">Suction Cleaner Selector</h1>
+          <p style="margin: 0; font-size: 16px; color: #d6e8fb">Can it run in this pool on this equipment, and will it meet the owner’s expectations?</p>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        <a href="index.html" style="min-height: 44px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.6); color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; display: flex; align-items: center">← Start page</a>
+        <a href="robotic.html" style="min-height: 44px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.6); color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; display: flex; align-items: center">Robotic selector</a>
+        <button type="button" onClick="{{reset}}" style="min-height: 44px; padding: 0 18px; border-radius: 10px; border: 2px solid #FFFFFF; background: #0b2e59; color: #FFFFFF; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">New customer</button>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width: 1360px; margin: 0 auto; padding: 24px 32px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+    <section aria-label="Outcomes" style="background: #FFFFFF; border: 1px solid #d7e3f1; border-radius: 14px; padding: 14px 18px; display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center">
+      <span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #4a6283">Each cleaner gets one outcome</span>
+      <sc-for list="{{legend}}" as="lg" hint-placeholder-count="4">
+        <span style="display: flex; align-items: center; gap: 8px; font-size: 14px"><span style="background: {{lg.bg}}; color: {{lg.fg}}; border-radius: 999px; padding: 3px 10px; font-weight: 700; font-size: 13px">{{lg.t}}</span><span style="color: #4a6283">{{lg.d}}</span></span>
+      </sc-for>
+    </section>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <section aria-label="Questions" style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+        <sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+          <div style="background: #FFFFFF; border: 1px solid {{g.border}}; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+            <div style="display: flex; align-items: flex-start; gap: 12px">
+              <span style="flex: none; width: 32px; height: 32px; border-radius: 50%; background: {{g.badgeBg}}; color: {{g.badgeFg}}; border: 2px solid #1565c0; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-weight: 800">{{g.n}}</span>
+              <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+                <h2 style="margin: 0; font-size: 20px; font-weight: 800">{{g.title}}</h2>
+                <span style="font-size: 14px; color: #4a6283; line-height: 1.4">{{g.sub}}</span>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; padding-left: 44px">
+              <sc-for list="{{g.qs}}" as="q" hint-placeholder-count="3">
+                <sc-if value="{{q.isSelect}}" hint-placeholder-val="{{ true }}">
+                <label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; color: #24456e">
+                  {{q.label}}
+                  <select value="{{q.value}}" onChange="{{q.change}}" style="height: 44px; padding: 0 10px; border: 1px solid #b8cde6; border-radius: 10px; background: #F8FAFC; color: #0b2e59; font-family: inherit; font-size: 15px">
+                    <sc-for list="{{q.opts}}" as="o" hint-placeholder-count="3">
+                      <option value="{{o.v}}">{{o.t}}</option>
+                    </sc-for>
+                  </select>
+                </label>
+                </sc-if>
+                <sc-if value="{{q.isVisual}}" hint-placeholder-val="{{ false }}">
+                <fieldset style="grid-column: 1 / -1; margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px; min-width: 0">
+                  <legend style="padding: 0 0 6px; font-size: 14px; font-weight: 600; color: #24456e">{{q.label}}</legend>
+                  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px">
+                    <sc-for list="{{q.tiles}}" as="o" hint-placeholder-count="4">
+                      <button type="button" onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="min-height: 112px; padding: 10px 8px; border-radius: 14px; border: 2px solid {{o.border}}; background: {{o.bg}}; color: {{o.ink}}; font-family: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px">
+                        <sc-if value="{{o.i_rect}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="120" height="68" viewBox="0 0 120 68"><rect x="12" y="10" width="96" height="46" rx="2" fill="#e8f1fb" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"></rect><path d="M82 56 V46 H108 M82 51 H108" fill="none" stroke="currentColor" stroke-width="2"></path></svg></sc-if><sc-if value="{{o.i_free}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="120" height="68" viewBox="0 0 120 68"><path d="M18 34 C16 14 46 8 64 16 C76 22 92 10 104 22 C116 36 102 58 78 54 C62 51 50 62 32 56 C22 52 18 44 18 34 Z" fill="#e8f1fb" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"></path></svg></sc-if><sc-if value="{{o.i_angled}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="120" height="68" viewBox="0 0 120 68"><path d="M12 10 H108 V34 L80 58 H12 Z" fill="#e8f1fb" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"></path></svg></sc-if><sc-if value="{{o.i_multi}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="120" height="68" viewBox="0 0 120 68"><path d="M12 10 H70 V24 H108 V58 H12 Z" fill="#e8f1fb" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"></path><path d="M70 24 V58" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"></path></svg></sc-if><sc-if value="{{o.i_cove}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="120" height="68" viewBox="0 0 120 68"><path d="M22 16 H98" fill="none" stroke="#9cc3dd" stroke-width="2" stroke-dasharray="5 4"></path><path d="M22 10 V42 Q22 58 38 58 H82 Q98 58 98 42 V10" fill="#e8f1fb" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"></path></svg></sc-if><sc-if value="{{o.i_square}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="120" height="68" viewBox="0 0 120 68"><path d="M22 16 H98" fill="none" stroke="#9cc3dd" stroke-width="2" stroke-dasharray="5 4"></path><path d="M22 10 V58 H98 V10" fill="#e8f1fb" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"></path></svg></sc-if><sc-if value="{{o.i_fine}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="120" height="68" viewBox="0 0 120 68"><circle cx="30" cy="26" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><circle cx="42" cy="40" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><circle cx="54" cy="30" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><circle cx="66" cy="44" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><circle cx="78" cy="28" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><circle cx="90" cy="40" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><circle cx="48" cy="50" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><circle cx="72" cy="54" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><circle cx="36" cy="48" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><circle cx="84" cy="52" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><circle cx="60" cy="20" r="2.2" fill="currentColor" fill-opacity="0.85"></circle></svg></sc-if><sc-if value="{{o.i_algae}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="120" height="68" viewBox="0 0 120 68"><circle cx="34" cy="24" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><circle cx="52" cy="30" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><circle cx="70" cy="22" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><circle cx="86" cy="30" r="2.2" fill="currentColor" fill-opacity="0.85"></circle><path d="M22 48 Q32 40 42 48 T62 48 T82 48 T102 48" fill="none" stroke="currentColor" stroke-width="2.5"></path></svg></sc-if><sc-if value="{{o.i_light}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="120" height="68" viewBox="0 0 120 68"><ellipse cx="48" cy="30" rx="8" ry="3.6" transform="rotate(-30 48 30)" fill="currentColor" fill-opacity="0.85"></ellipse><ellipse cx="70" cy="42" rx="8" ry="3.6" transform="rotate(25 70 42)" fill="currentColor" fill-opacity="0.85"></ellipse><circle cx="60" cy="24" r="2" fill="currentColor" fill-opacity="0.85"></circle></svg></sc-if><sc-if value="{{o.i_heavy}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="120" height="68" viewBox="0 0 120 68"><ellipse cx="28" cy="24" rx="8" ry="3.6" transform="rotate(-30 28 24)" fill="currentColor" fill-opacity="0.85"></ellipse><ellipse cx="46" cy="36" rx="8" ry="3.6" transform="rotate(20 46 36)" fill="currentColor" fill-opacity="0.85"></ellipse><ellipse cx="64" cy="22" rx="8" ry="3.6" transform="rotate(-15 64 22)" fill="currentColor" fill-opacity="0.85"></ellipse><ellipse cx="82" cy="34" rx="8" ry="3.6" transform="rotate(30 82 34)" fill="currentColor" fill-opacity="0.85"></ellipse><ellipse cx="98" cy="22" rx="8" ry="3.6" transform="rotate(-25 98 22)" fill="currentColor" fill-opacity="0.85"></ellipse><ellipse cx="36" cy="48" rx="8" ry="3.6" transform="rotate(15 36 48)" fill="currentColor" fill-opacity="0.85"></ellipse><ellipse cx="58" cy="50" rx="8" ry="3.6" transform="rotate(-25 58 50)" fill="currentColor" fill-opacity="0.85"></ellipse><ellipse cx="80" cy="50" rx="8" ry="3.6" transform="rotate(10 80 50)" fill="currentColor" fill-opacity="0.85"></ellipse><ellipse cx="96" cy="44" rx="8" ry="3.6" transform="rotate(-35 96 44)" fill="currentColor" fill-opacity="0.85"></ellipse></svg></sc-if>
+                        <span style="font-size: 14px; font-weight: {{o.weight}}; color: #0b2e59; line-height: 1.25; text-align: center">{{o.t}}</span>
+                      </button>
+                    </sc-for>
+                  </div>
+                </fieldset>
+                </sc-if>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+
+        <div style="background: #0b2e59; color: #FFFFFF; border-radius: 14px; padding: 16px 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+          <div style="display: flex; flex-direction: column; gap: 2px; flex: 1 1 260px">
+            <span style="font-size: 18px; font-weight: 800">Professional installation checks</span>
+            <span style="font-size: 14px; color: #d6e8fb; line-height: 1.4">For technicians or when the equipment is known: skimmer and vacuum plate, other suction paths, pump, returns and an in-pool demo.</span>
+          </div>
+          <button type="button" onClick="{{togglePro}}" aria-expanded="{{proOpen}}" style="height: 44px; padding: 0 16px; border-radius: 10px; border: 2px solid #FFFFFF; background: transparent; color: #FFFFFF; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">{{proBtn}}</button>
+        </div>
+        <sc-if value="{{proOpen}}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{proGroups}}" as="g" hint-placeholder-count="2">
+            <div style="background: #FFFFFF; border: 1px solid {{g.border}}; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+              <div style="display: flex; align-items: flex-start; gap: 12px">
+                <span style="flex: none; width: 32px; height: 32px; border-radius: 50%; background: {{g.badgeBg}}; color: {{g.badgeFg}}; border: 2px solid #0b2e59; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-weight: 800">{{g.n}}</span>
+                <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+                  <h2 style="margin: 0; font-size: 20px; font-weight: 800">{{g.title}}</h2>
+                  <span style="font-size: 14px; color: #4a6283; line-height: 1.4">{{g.sub}}</span>
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; padding-left: 44px">
+                <sc-for list="{{g.qs}}" as="q" hint-placeholder-count="3">
+                  <label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; color: #24456e">
+                    {{q.label}}
+                    <select value="{{q.value}}" onChange="{{q.change}}" style="height: 44px; padding: 0 10px; border: 1px solid #b8cde6; border-radius: 10px; background: #F8FAFC; color: #0b2e59; font-family: inherit; font-size: 15px">
+                      <sc-for list="{{q.opts}}" as="o" hint-placeholder-count="3">
+                        <option value="{{o.v}}">{{o.t}}</option>
+                      </sc-for>
+                    </select>
+                  </label>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+          <div style="background: #FFFFFF; border: 2px solid #1565c0; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+            <h2 style="margin: 0; font-size: 20px; font-weight: 800">Hydraulics: why suction cleaners stall</h2>
+            <span style="font-size: 14px; color: #4a6283; line-height: 1.4">A suction cleaner only works inside a suction window. Every restriction between the cleaner and the pump takes some of it away.</span>
+            <ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 15px; line-height: 1.45; color: #24456e">
+              <li><b>Too little suction:</b> it stalls, sits in one spot or won’t climb walls. <b>Too much:</b> it races, lifts off the floor or draws air, which can starve the pump. Kreepy Krauly’s Smart-Skim and Auto Skim valves vent excess vacuum automatically; The PoolCleaner uses its regulator valve.</li>
+              <li><b>Operating suction</b> on a 1 hp pump (about 45 kPa available): VTX-3 and VTX-7 about 18 kPa; Sprinta Plus and rX-Tank PRO about 25 kPa (Kreepy Krauly training). The PoolCleaner: at least 8 wheel RPM, about 18–25 cm of mercury on a vacuum gauge (manual; gauge not supplied).</li>
+              <li><b>Resistance adds up:</b> a long suction line, a pump above pool level, a second skimmer or an open main drain all reduce the vacuum at the cleaner. Close every suction line except the cleaner’s.</li>
+              <li><b>Pipe run and pipe size:</b> distance alone doesn’t stop a suction cleaner; pipe size and pump power overcome the friction loss. Waterco training guidance: under 10 m, a 1 hp pump with 40 or 50 mm pipe works well; 10–25 m needs 50 mm lines and a 1–1.5 hp pump; over 25 m, a suction cleaner becomes inefficient, so consider a robot.</li>
+              <li><b>Hose length:</b> the corrugated cleaner hose loses far more suction than smooth PVC pipe. Fit only enough hose to reach the farthest point from the skimmer, plus the maker’s allowance. Extra lengths reduce suction.</li>
+              <li><b>Signs the run is too long or restricted:</b> air pockets in the pump lid, or low suction at the skimmer with the pump at full speed and a clean filter.</li>
+              <li><b>Variable-speed pumps:</b> the lowest speed may not drive the cleaner. Program the cleaning hours about 200 rpm higher (Kreepy Krauly training).</li>
+              <li><b>The clean filter paradox:</b> it runs well after the filter is cleaned, then slows as debris loads the filter and pressure rises. Note the clean filter pressure at install. If the cleaner stops after a few days, backwash or clean the filter and empty the baskets before suspecting the cleaner.</li>
+            </ul>
+            <span style="font-size: 13px; color: #4a6283; line-height: 1.4">Pipe-run distances and pipe sizes are Waterco training guidance from field experience, consistent with PVC friction-loss estimates. Model suction figures come from the makers’ manuals and training.</span>
+          </div>
+        </sc-if>
+      </section>
+
+      <section aria-label="Results" style="flex: 1.15 1 540px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+        <div style="background: #FFFFFF; border: 1px solid #d7e3f1; border-radius: 14px; padding: 14px 18px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: baseline">
+          <span style="font-size: 22px; font-weight: 800">{{answered}} of {{qTotal}} answered</span>
+          <span style="font-size: 15px; color: #4a6283">{{summary}}</span>
+        </div>
+
+        <sc-if value="{{showRobot}}" hint-placeholder-val="{{ false }}">
+          <div style="background: #FFF6E6; border: 2px solid #ffb547; border-radius: 14px; padding: 16px 20px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center">
+            <div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 18px; font-weight: 800">Worth comparing a robotic cleaner</span>
+              <span style="font-size: 15px; line-height: 1.45; color: #5C3A00">{{robotWhy}} Robotic cleaners collect debris in an onboard basket, so they don’t add to the load on the pool filter. An option to discuss, not a recommendation.</span>
+            </div>
+            <a href="robotic.html" style="min-height: 48px; padding: 0 20px; border-radius: 10px; background: #0b2e59; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none; display: flex; align-items: center">Compare robotic cleaners →</a>
+          </div>
+        </sc-if>
+
+        <sc-for list="{{cards}}" as="c" hint-placeholder-count="4">
+          <article style="background: #FFFFFF; border: 2px solid {{c.border}}; border-radius: 16px; overflow: hidden">
+            <div style="background: {{c.bg}}; color: {{c.fg}}; padding: 9px 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 14px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase">
+              <span>{{c.outcome}}</span><span>{{c.rankTxt}}</span>
+            </div>
+            <div style="padding: 18px 20px; display: flex; flex-direction: column; gap: 14px">
+              <div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: center">
+                <div style="flex: none; width: 128px; height: 112px; border-radius: 12px; background: #F3F6F9; display: flex; align-items: center; justify-content: center; overflow: hidden"><img src="{{c.img}}" alt="{{c.full}}" style="width: 100%; height: 100%; object-fit: contain"></div>
+                <div style="flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+                  <span style="font-size: 13px; font-weight: 700; color: #4a6283; text-transform: uppercase; letter-spacing: 0.08em">{{c.brand}} · Code {{c.code}}</span>
+                  <h3 style="margin: 0; font-size: 32px; font-weight: 800; line-height: 1">{{c.name}}</h3>
+                  <span style="font-size: 15px; color: #24456e">{{c.type}}</span>
+                  <span style="font-size: 14px; color: #4a6283">{{c.hoseLine}} · {{c.warranty}}</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px">
+                  <span style="font-size: 13px; color: #4a6283">RRP (AUD)</span>
+                  <span style="font-size: 28px; font-weight: 800">{{c.price}}</span>
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px 20px">
+                <sc-if value="{{c.hasNo}}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; flex-direction: column; gap: 6px">
+                    <h4 style="margin: 0; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #9B1C1C">Doesn’t meet</h4>
+                    <sc-for list="{{c.no}}" as="t" hint-placeholder-count="1"><div style="display: flex; gap: 8px; font-size: 15px; line-height: 1.4"><span aria-hidden="true" style="flex: none; font-weight: 800; color: #9B1C1C">✕</span><span>{{t}}</span></div></sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{c.hasTrial}}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; flex-direction: column; gap: 6px">
+                    <h4 style="margin: 0; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A5A00">Trial or confirm</h4>
+                    <sc-for list="{{c.trial}}" as="t" hint-placeholder-count="1"><div style="display: flex; gap: 8px; font-size: 15px; line-height: 1.4"><span aria-hidden="true" style="flex: none; font-weight: 800; color: #8A5A00">?</span><span>{{t}}</span></div></sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{c.hasSetup}}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; flex-direction: column; gap: 6px">
+                    <h4 style="margin: 0; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #0b4f9c">Setup &amp; accessories</h4>
+                    <sc-for list="{{c.setup}}" as="t" hint-placeholder-count="1"><div style="display: flex; gap: 8px; font-size: 15px; line-height: 1.4"><span aria-hidden="true" style="flex: none; font-weight: 800; color: #0b4f9c">+</span><span>{{t}}</span></div></sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{c.hasFit}}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; flex-direction: column; gap: 6px">
+                    <h4 style="margin: 0; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #1C7C4A">Why it suits</h4>
+                    <sc-for list="{{c.fit}}" as="t" hint-placeholder-count="2"><div style="display: flex; gap: 8px; font-size: 15px; line-height: 1.4"><span aria-hidden="true" style="flex: none; font-weight: 800; color: #1C7C4A">✓</span><span>{{t}}</span></div></sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{c.hasNote}}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; flex-direction: column; gap: 6px">
+                    <h4 style="margin: 0; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #4a6283">Worth noting</h4>
+                    <sc-for list="{{c.note}}" as="t" hint-placeholder-count="1"><div style="display: flex; gap: 8px; font-size: 15px; line-height: 1.4"><span aria-hidden="true" style="flex: none; font-weight: 800; color: #4a6283">·</span><span>{{t}}</span></div></sc-for>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="background: #F3F8FC; border: 1px solid #CFE2EF; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px">
+                <h4 style="margin: 0; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #24456e">Key features</h4>
+                <sc-for list="{{c.features}}" as="t" hint-placeholder-count="3"><div style="font-size: 14px; line-height: 1.4; color: #24456e">{{t}}</div></sc-for>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+
+        <sc-if value="{{showCanister}}" hint-placeholder-val="{{ false }}">
+          <div style="background: #FFF6E6; border: 2px solid #ffb547; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+              <span style="background: #ffb547; color: #0b2e59; border-radius: 999px; padding: 4px 12px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em">Add-on</span>
+              <h3 style="margin: 0; font-size: 22px; font-weight: 800">Leaf canister</h3>
+            </div>
+            <p style="margin: 0; font-size: 15px; line-height: 1.45">{{canisterWhy}}</p>
+            <sc-for list="{{canisters}}" as="k" hint-placeholder-count="2">
+              <div style="background: #FFFFFF; border: 1px solid #E6D3B0; border-radius: 12px; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+                <div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+                  <span style="font-size: 13px; font-weight: 700; color: #4a6283; text-transform: uppercase; letter-spacing: 0.08em">Waterco · Code {{k.code}}</span>
+                  <span style="font-size: 18px; font-weight: 800">{{k.name}}</span>
+                  <span style="font-size: 14px; color: #4a6283">{{k.use}}</span>
+                </div>
+                <sc-if value="{{k.best}}" hint-placeholder-val="{{ false }}"><span style="background: #1565c0; color: #FFFFFF; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em">Suggested</span></sc-if>
+                <span style="font-size: 22px; font-weight: 800">{{k.price}}</span>
+              </div>
+            </sc-for>
+            <span style="font-size: 13px; color: #6B4500; line-height: 1.4">Check the canister fits the cleaner’s hose. Kreepy Krauly manuals advise using genuine parts with their hose and valves.</span>
+          </div>
+        </sc-if>
+
+        <p role="note" style="margin: 0; font-size: 13px; line-height: 1.5; color: #4a6283">Draft. Rules come only from the Kreepy Krauly owner’s manuals, brochures, range chart and training deck, and The PoolCleaner owner’s manual and brochure. Where a maker doesn’t state a flow rate, pool size or coverage, none is assumed. Prices are RRP in Australian dollars (AUD); New Zealand check the NZ RRP.</p>
+      </section>
+    </div>
+  </main>
+  <footer aria-label="Supplied by Waterco and Davey" style="background: #FFFFFF; border-top: 1px solid #d7e3f1"><div style="max-width: 1200px; margin: 0 auto; padding: 18px 24px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 28px"><span style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #4a6283">Supplied by</span><img src="images/waterco-logo.png" alt="Waterco: water, the liquid of life" style="height: 40px; width: auto; display: block"><img src="images/davey-logo.png" alt="Davey" style="height: 28px; width: auto; display: block; border-radius: 4px"></div></footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2200}}'>
+const IMG = id => '/_blob/' + id;
+/* Suction range. Kreepy Krauly: owner's manuals, brochures, rX-Tank brochure range chart, NZ training deck; codes and RRP from Waterco (Nov 2026).
+   The PoolCleaner: 2-wheel owner's manual and brochure; codes and RRP from the Waterco catalogue. */
+const MODELS = [
+  {id: 'rx', kk: 1, brand: 'Kreepy Krauly · Davey', name: 'rX-Tank PRO', full: 'Kreepy Krauly rX-Tank PRO', img: 'images/kk-rx-tank-pro.png', code: 'KKRXTANKPRO', price: 850,
+    type: 'Robotic crossover suction cleaner: turbine drives tracks and dual active power brushes',
+    hoseM: 10, extraM: 1, hoseTxt: '10 m Ultra Flex hose, 1 hose weight', extraTxt: 'one extra 1 m length',
+    walls: 'yes', heavy: 1, scrub: 0, brushes: 1, angled: 1, vtx: 0, blanket: 1,
+    warranty: '2 yr full system + 10 yr flow turbine',
+    features: ['X-NAV dual-drive navigation; Power Steering Halo for multi-angle wall traction', 'Pro Clean Power Brushes and Grip Tracks; Power Vortex Suction', 'Halo Pump Protector; Turbo Cleaning Cycle', 'Never gets stuck; works under pool blankets', 'Tunes to any variable-speed pump; zero extra running cost on single-speed pumps']},
+  {id: 'sp', kk: 1, brand: 'Kreepy Krauly · Davey', name: 'Sprinta Plus', full: 'Kreepy Krauly Sprinta Plus', img: 'images/kk-sprinta-plus.png', code: 'KKSP10', price: 689,
+    type: 'Straight-through turbine with geared Intelligent Steering; no wheels or tracks',
+    hoseM: 10, extraM: 1, hoseTxt: '10 m Ultra Flex hose, 3 hose weights', extraTxt: 'one extra 1 m length',
+    walls: 'conflict', heavy: 1, scrub: 0, brushes: 0, angled: 1, vtx: 0, blanket: 0,
+    warranty: '2 yr full system + 10 yr flow turbine',
+    features: ['“Unstickable”: corners, stairs and ladders are not a problem', 'Straight-through turbine handles heavy leaf loads without choking', 'Enclosed gears: sand and grit can’t slow it', 'Smart-Skim standard; Auto Skim upgrade optional']},
+  {id: 'v7', kk: 1, brand: 'Kreepy Krauly · Davey', name: 'VTX-7', full: 'Kreepy Krauly VTX-7', img: 'images/kk-vtx-7.png', code: 'KKVTX7', price: 775,
+    type: 'Vortex cleaner: Flow Drive is its single moving part',
+    hoseM: 12, extraM: 1.5, hoseTxt: '12 m Ultra Flex hose, 3 hose weights', extraTxt: 'about 1.5 m extra',
+    walls: 'yes', heavy: 1, scrub: 1, brushes: 0, angled: 0, vtx: 1, blanket: 0,
+    warranty: '2 yr full system + 10 yr flow turbine',
+    features: ['Triple clean: vortex vacuum, scrubbing silicon seal and Smart-Skim', 'Perfect for big pools and large leaf loads; oversized leaf scoop', 'Crisscross pattern with adjustable steering; best on curved walls', 'Accessories: step deflector, extended float bar, main drain cover, roller bumper strap']},
+  {id: 'v3', kk: 1, brand: 'Kreepy Krauly · Davey', name: 'VTX-3', full: 'Kreepy Krauly VTX-3', img: 'images/kk-vtx-3.png', code: 'KKVTX3', price: 449,
+    type: 'Compact vortex cleaner: smaller body and pipes',
+    hoseM: 10, extraM: 1.5, hoseTxt: '10 m Ultra Flex hose, 2 hose weights', extraTxt: 'about 1.5 m extra',
+    walls: 'yes', heavy: 0, scrub: 1, brushes: 0, angled: 0, vtx: 1, blanket: 0, compact: 1,
+    warranty: '2 yr full system + 10 yr flow turbine',
+    features: ['Same vortex technology as the VTX-7 in a smaller body for compact pools', 'Side leaf scoops for light to medium leaf loads', 'Scrubbing seal removes algae and calcium build-up', 'Deflector supplied for above-ground pools; hose thruster accessory for problem steps']},
+  {id: 'tpc', kk: 0, brand: 'The PoolCleaner · Waterco', name: 'The PoolCleaner 2-Wheel', full: 'The PoolCleaner 2-Wheel', img: 'images/the-poolcleaner.png', code: '326300 · tiled 326301', price: 1025,
+    type: 'Turbine-driven 2-wheel cleaner with patented steering, adjustable skirts and tyre treads',
+    hoseM: 10, extraM: 2, hoseTxt: '10 hose sections + leader hose, 2 floats, 90° connector, regulator valve', extraTxt: 'one to two extra lengths',
+    walls: 'yes', heavy: 1, scrub: 0, brushes: 0, angled: 1, vtx: 0, blanket: 0,
+    warranty: '4 yr full + 3 yr pro rata',
+    features: ['Patented steering reverses the left wheel at intervals: “the one that won’t get stuck in corners”', 'Self-adjusting turbine vanes pass large debris and virtually eliminate clogging', 'Energy-saving throat insert runs it on a variable-speed pump’s low speed', 'Stainless steel wheel bearings; special tyres for tiled pools (326301); made in the USA']}
+];
+
+const SEC = [
+  {n: 1, title: 'Pool surface & size', sub: 'The hose must reach the farthest corner from the skimmer with the model’s extra allowance.'},
+  {n: 2, title: 'Shape & features', sub: 'Steps, lights and drains trigger checks and accessories, not automatic promises of coverage.'},
+  {n: 3, title: 'Debris & expectations', sub: 'What gets into the pool, and what the owner expects the cleaner to do.'},
+  {n: 4, title: 'Ownership & budget', sub: 'Previous experience, how much filter maintenance the owner will accept, and the price range.'}
+];
+const PRO = [
+  {n: 5, title: 'Skimmer & suction paths', sub: 'Identify the skimmer, vacuum plate and any other suction path.'},
+  {n: 6, title: 'Pump, hydraulics & demo', sub: 'Pump type, distance and condition, return-jet direction, and whether it has run in this pool.'}
+];
+/* Auto Skim assembly kits by skimmer box (Kreepy Krauly range brochure). Valve spring: Red for VTX-3; Black for VTX-7, Sprinta Plus and rX-Tank PRO. */
+const AUTOSKIM = [['KK65', 'Quipmaster 950', '215 × 190 mm'], ['KK66', 'Filtrite 900', '215 mm'], ['KK67', 'Clark / Paramount', '215 mm'], ['KK68', 'Special Blue', '190 mm'],
+  ['KK69', 'Nally / Waterco', '270 mm'], ['KK70', 'Quiptron / Poolrite', '230 mm'], ['KK72', 'Swimquip', '210 mm'], ['KK71', 'SK1000', '215 × 205 mm'],
+  ['KK72.1', 'Baker Hydro', '215 mm'], ['KK72.2', 'Astral', '190 mm'], ['KK72.3', 'Basic', '215 mm']];
+const autoSkim = (m, a) => {
+  const spring = (m.id === 'v3' ? 'Red' : 'Black') + ' valve spring';
+  const k = AUTOSKIM.find(x => x[0] === a.skimBrand);
+  return k ? 'kit ' + k[0] + ' for ' + k[1] + ' (' + k[2] + '), ' + spring : 'kit KK65–KK72.3 by skimmer box brand (see Skimmer & suction paths), ' + spring;
+};
+const DIST = []; for (let d = 4; d <= 16; d++) DIST.push([String(d), d + ' m']);
+const QS = [
+  {k: 'surface', s: 1, label: 'Pool surface', opts: [['pebble', 'Pebblecrete / Quartzon'], ['concrete', 'Concrete / plaster / render'], ['painted', 'Painted'], ['tiled', 'Fully tiled'], ['fibre', 'Fibreglass'], ['vinyl', 'Vinyl liner']]},
+  {k: 'build', s: 1, label: 'Construction', opts: [['in', 'In-ground'], ['above', 'Above-ground']]},
+  {k: 'reach', s: 1, label: 'Skimmer to farthest corner', opts: DIST.concat([['17', 'Over 16 m']])},
+  {k: 'deep', s: 1, label: 'Deepest point', opts: [['1.5', 'Up to 1.5 m'], ['2', '1.5–2 m'], ['2.5', 'Over 2 m']]},
+  {k: 'shape', s: 2, label: 'Pool shape', visual: 1, opts: [['rect', 'Square / rectangle', 'rect'], ['curved', 'Freeform / curved', 'free'], ['angled', 'Angled walls or corners', 'angled'], ['multi', 'Multi-level / connected', 'multi']]},
+  {k: 'profile', s: 2, label: 'Floor-to-wall profile', visual: 1, opts: [['curved', 'Curved (cove)', 'cove'], ['square', 'Square corners', 'square']]},
+  {k: 'steps', s: 2, label: 'Steps, benches, ledges', opts: [['few', 'Few or none'], ['many', 'Several steps, benches or ledges']]},
+  {k: 'obst', s: 2, label: 'Lights or drain grille', opts: [['none', 'Neither'], ['light', 'Underwater light'], ['drain', 'Main drain grille'], ['both', 'Both']]},
+  {k: 'debris', s: 3, label: 'Main debris and leaf load', visual: 1, opts: [['fine', 'Fine dirt, sand, pollen', 'fine'], ['algae', 'Fine dirt + algae or calcium', 'algae'], ['light', 'Light to medium leaves', 'light'], ['heavy', 'Heavy leaf loads', 'heavy']]},
+  {k: 'coverage', s: 3, label: 'Expects it to clean', opts: [['floor', 'Floor only'], ['walls', 'Floor and walls'], ['steps', 'Floor, walls and steps'], ['waterline', 'Everything, including the waterline']]},
+  {k: 'skim', s: 3, label: 'Surface skimming', opts: [['no', 'Not important'], ['nice', 'Nice to have'], ['important', 'Important']]},
+  {k: 'blanket', s: 4, label: 'Pool blanket used?', opts: [['no', 'No'], ['yes', 'Yes']]},
+  {k: 'previous', s: 4, label: 'Previous cleaner', opts: [['none', 'None, or no problems'], ['stuck', 'Kept getting stuck'], ['noclimb', 'Didn’t climb walls'], ['coverage', 'Missed areas / poor coverage'], ['slow', 'Stalled or slow on a variable-speed pump'], ['stops', 'Worked, then slowed or stopped after a few days']]},
+  {k: 'maint', s: 4, label: 'Filter maintenance', opts: [['ok', 'Happy to empty baskets and clean the filter more often'], ['minimal', 'Wants minimal filter load / set and forget']]},
+  {k: 'budget', s: 4, label: 'Budget (RRP, AUD)', opts: [['500', 'Up to $500'], ['1000', '$500 – $1,000'], ['1500', '$1,000 – $1,500']]},
+  {k: 'plate', s: 5, label: 'Vacuum plate', opts: [['std', 'Standard round plate'], ['poly190', 'Polyplastics 190 / 210'], ['sk', 'Polyplastics SK1000 (rectangular)'], ['poolrite', 'Poolrite'], ['unknown', 'Not identified']]},
+  {k: 'skimBrand', s: 5, label: 'Skimmer box brand (Auto Skim kit)', opts: AUTOSKIM.map(x => [x[0], x[1] + ' (' + x[2] + ')']).concat([['unknown', 'Not identified']])},
+  {k: 'skimmers', s: 5, label: 'Number of skimmers', opts: [['one', 'One'], ['more', 'More than one']]},
+  {k: 'paths', s: 5, label: 'Main drain / other suction lines', opts: [['closed', 'None, or closed off'], ['open', 'Open, can be closed'], ['other', 'In-floor cleaning or other suction system']]},
+  {k: 'pump', s: 6, label: 'Pump type', opts: [['single', 'Single-speed'], ['two', 'Two-speed'], ['vs', 'Variable-speed']]},
+  {k: 'pumpDist', s: 6, label: 'Pipe run, pump to skimmer', opts: [['u10', 'Under 10 m'], ['m25', '10–25 m'], ['o25', 'Over 25 m'], ['unknown', 'Not checked']]},
+  {k: 'pipe', s: 6, label: 'Suction pipe size', opts: [['50', '50 mm (2")'], ['40', '40 mm (1.5")'], ['unknown', 'Not checked']]},
+  {k: 'pumpCond', s: 6, label: 'Pump & filter performance', opts: [['good', 'Good, clean filter and baskets'], ['weak', 'Small, old or weak suction'], ['unknown', 'Not checked']]},
+  {k: 'returns', s: 6, label: 'Return jets', opts: [['down', 'Pointing down or sideways'], ['across', 'Fixed, pointing across the pool']]},
+  {k: 'demo', s: 6, label: 'Demonstrated in this pool?', opts: [['no', 'Not yet'], ['worked', 'Yes, worked well'], ['issues', 'Yes, with problems']]}
+];
+const BLANK = {}; QS.forEach(q => { BLANK[q.k] = ''; });
+const LEVELS = [
+  {t: 'Suitable', d: 'documented requirements match', bg: '#E7F5EC', fg: '#14532D', border: '#1C7C4A', head: '#1C7C4A'},
+  {t: 'Suitable with setup', d: 'needs listed components or settings', bg: '#e8f1fb', fg: '#0b2e59', border: '#1565c0', head: '#1565c0'},
+  {t: 'Trial needed', d: 'a material question is unresolved', bg: '#FFF4DC', fg: '#6B4500', border: '#B4560F', head: '#B4560F'},
+  {t: 'Expectations not matched', d: 'the requirement can’t be backed up', bg: '#FCEBEB', fg: '#7F1D1D', border: '#9B1C1C', head: '#9B1C1C'}
+];
+/* Leaf canisters (Waterco catalogue): add-on for heavy-debris pools. Sits in the cleaner's hose line so leaves stop before the skimmer basket. */
+const CANISTERS = [
+  {code: '326343', name: 'Leaf Canister Large (1A-W530)', price: 220, use: 'Best for heavy or seasonal leaf drops'},
+  {code: '326346', name: 'Leaf Canister Standard (1A-W560)', price: 150, use: 'For smaller leaf loads'}
+];
+
+function evaluate(m, a) {
+  const fit = [], setup = [], trial = [], no = [], note = [];
+  let s = 0;
+  const tpc = m.id === 'tpc';
+  if (tpc) note.push('Remove it when swimmers enter the pool, before chemically shocking and during backwash (manual)');
+  // Surface
+  if (a.surface) {
+    if (m.vtx) fit.push('Suitable for all pool material types (brochure)');
+    if (tpc) fit.push(a.surface === 'tiled' ? 'Quote the tiled-pool version (326301) with special tyres for tiles' : 'Ideal for all pool shapes and surfaces (brochure)');
+    if (m.kk && a.surface === 'vinyl') setup.push('Vinyl liner: check for deterioration or damage and fix it before installing');
+    if (m.kk && a.surface === 'tiled') setup.push('Tiled pool: check and repair any loose tiles before installing');
+    if (a.surface === 'tiled' && m.id === 'rx') trial.push('Tiled pool: check tile compatibility with Davey or your Kreepy Krauly dealer (Kreepy Krauly selector)');
+    if (a.surface === 'tiled' && m.id === 'v7') setup.push('Tiled pool: may need a Cork Sole (Kreepy Krauly selector)');
+    if (a.surface === 'pebble' && m.id === 'v7') setup.push('Rough pebble surface: the Roller Bumper Strap accessory reduces strap wear');
+  }
+  // Construction
+  if (a.build === 'above') {
+    if (m.kk) setup.push('Above-ground: check the pump gives enough vacuum; Kreepy Krauly says a 0.75 hp pump is typically enough');
+    if (m.id === 'v3') setup.push('Above-ground: fit the deflector supplied (manual step 3)');
+    else if (m.id === 'v7') setup.push('Above-ground: may need the Extended Float Bar to adjust the turning action (manual)');
+    else if (m.kk) note.push('Above-ground isn’t covered in the ' + m.name + ' manual; Kreepy Krauly’s selector only asks for a vacuum check');
+    else trial.push('Above-ground use isn’t covered in ' + (tpc ? 'The PoolCleaner' : 'the ' + m.name) + ' manual: confirm with the supplier or trial');
+  }
+  // Hose reach
+  if (a.reach) {
+    const r = +a.reach, need = r + m.extraM;
+    if (tpc) {
+      if (need > m.hoseM) setup.push('Hose: needs to be ' + m.extraTxt + ' longer than the ' + r + ' m reach; check the 10 supplied sections cover about ' + need + ' m and add sections if not');
+      else fit.push('10 hose sections + leader hose; manual: hose ' + m.extraTxt + ' longer than the farthest point');
+      note.push('Hose section length isn’t stated in the manual: confirm before quoting extra sections');
+    } else if (need > m.hoseM) {
+      const n = Math.ceil(need - m.hoseM);
+      setup.push('Hose: about ' + need + ' m needed (' + r + ' m reach + ' + m.extraTxt + '); ' + m.hoseM + ' m supplied, so add ' + n + ' × 1 m length' + (n > 1 ? 's' : ''));
+    } else fit.push(m.hoseM + ' m hose supplied covers the ' + r + ' m reach plus ' + m.extraTxt);
+    if (m.compact) {
+      if (r <= 8) { s += 2; fit.push('Smaller body made for compact pools'); }
+      else if (r >= 12) { s -= 2; note.push('Made for compact pools; the VTX-7 is the larger vortex model'); }
+    }
+    if (m.id === 'v7' && need < 8) note.push('Under 8 m of hose: use only 2 hose weights (manual)');
+  }
+  if (a.deep === '2.5') note.push('Deep end over 2 m: measure the hose path down the deep-end wall, not just across the surface');
+  // Shape
+  if (a.shape === 'angled') {
+    if (m.angled) { s += 3; fit.push(tpc ? 'Steering reverses the left wheel at intervals so it doesn’t get stuck in corners (brochure)' : 'Ticked for angled pools in the Kreepy Krauly range chart'); }
+    else { s -= 2; trial.push('Not ticked for angled pools in the range chart (crisscross pattern is best on curved walls): trial in the pool'); }
+  }
+  if (a.shape === 'curved') { s += m.vtx ? 2 : 1; fit.push(m.vtx ? 'Crisscross pattern is best suited to curved walls' : (tpc ? 'Cleans pools of all shapes and sizes (brochure)' : 'Ticked for curved walls in the range chart')); }
+  if (a.profile === 'square') {
+    if (m.angled) { s += 2; fit.push(tpc ? 'Steering reverses the left wheel so it doesn’t get stuck in square corners (brochure)' : 'Suited to square floor-to-wall corners (Kreepy Krauly selector and range chart)'); }
+    else { s -= 2; trial.push('Square floor-to-wall corners: the crisscross pattern is made for curved walls. Trial in the pool'); }
+  }
+  if (a.profile === 'curved' && m.vtx) { s += 1; fit.push('Curved floor profile suits the crisscross pattern'); }
+  if (a.shape === 'multi') trial.push('Multi-level or connected areas: trial to confirm it reaches every section');
+  // Steps
+  if (a.steps === 'many') {
+    if (m.id === 'sp') { s += 2; fit.push('Geared steering navigates tight corners and stairs without getting trapped'); }
+    else if (m.id === 'rx') { s += 2; fit.push('Never gets stuck: dual-drive navigation moves freely around obstacles'); }
+    else if (tpc) { s += 1; fit.push('Adjustable skirts with rollers keep suction over difficult obstacles (brochure)'); }
+    else if (m.id === 'v7') setup.push('Steps: fit a Step Deflector if it wedges on steps or in tight corners (accessory)');
+    else setup.push('Steps: fit a Hose Thruster at about 2 m if it wedges on steps (accessory)');
+  }
+  // Obstacles
+  if ((a.obst === 'light' || a.obst === 'both') && m.id === 'v7') setup.push('Underwater light: set the steering adjuster float bar to position 3 or 4 if it sticks');
+  if ((a.obst === 'drain' || a.obst === 'both') && m.vtx) setup.push('Main drain grille: fit a Main Drain Cover if it gets stuck (accessory)');
+  // Debris
+  if (a.debris === 'heavy') {
+    if (!m.heavy) no.push('Heavy leaf loads: rated for light to medium leaf loads only (range chart)');
+    else if (tpc) { s += 2; fit.push('Self-adjusting turbine vanes pass large debris and virtually eliminate clogging (brochure)'); }
+    else { s += 2; fit.push('Ticked for heavy leaf loads in the range chart'); setup.push('Heavy leaves: upgrade to Auto Skim with combined vacuum plate: ' + autoSkim(m, a)); }
+  }
+  if (a.debris === 'light') fit.push(tpc ? 'Turbine vanes pass leaves and larger debris (brochure)' : 'Handles light to medium leaf loads (range chart)');
+  if ((a.debris === 'fine' || a.debris === 'algae') && m.kk) fit.push('Vortex vacuum picks up heavier fine debris such as sand and grit');
+  if (a.debris === 'algae') {
+    if (m.scrub) { s += 2; fit.push('Scrubbing seal removes algae and calcium build-up'); }
+    else if (m.brushes) { s += 1; fit.push('Dual active power brushes lift dirt for vacuuming'); }
+    else note.push(tpc ? 'Scrubbing isn’t advertised' : 'Not ticked for scrubbing in the range chart');
+  }
+  // Coverage
+  if (a.coverage === 'walls' || a.coverage === 'steps') {
+    if (m.walls === 'yes') {
+      fit.push(tpc ? 'Patented tyre treads give excellent climbing ability (brochure)' : 'Ticked for wall climbing in the range chart');
+      if (a.pump === 'vs' && m.kk) setup.push('Variable-speed pump: wall climbing may need tuning (range chart footnote)');
+    } else trial.push('Walls: the manual mentions walls, but the range chart doesn’t tick wall climbing for the Sprinta Plus. Confirm with Davey or trial');
+  }
+  if (a.coverage === 'steps') {
+    if (m.vtx) no.push('Step cleaning: the manual suggests keeping it off steps and cleaning them by hand');
+    else trial.push('Step cleaning isn’t promised by the maker: trial on these steps');
+  }
+  if (a.coverage === 'waterline') no.push('Waterline cleaning isn’t advertised for ' + (tpc ? 'The PoolCleaner' : 'Kreepy Krauly suction cleaners'));
+  // Skimming
+  if (tpc) {
+    if (a.skim === 'nice') note.push('No skim valve supplied: surface skimming isn’t advertised');
+    if (a.skim === 'important') trial.push('Surface skimming isn’t advertised for The PoolCleaner: clarify what the owner expects');
+  } else {
+    if (a.skim === 'nice') fit.push('Smart-Skim uses excess vacuum to skim the surface');
+    if (a.skim === 'important') { if (a.debris === 'heavy' && m.heavy) fit.push('The Auto Skim upgrade also gives stronger surface skimming'); else setup.push('For stronger surface skimming, upgrade to Auto Skim with combined vacuum plate: ' + autoSkim(m, a)); }
+  }
+  // Blanket
+  if (a.blanket === 'yes') {
+    if (m.blanket) { s += 1; fit.push('Works under pool blankets (brochure)'); }
+    if (m.kk) setup.push('Pool blanket: watch chlorine levels; over-chlorinating can harm the cleaner and void the warranty');
+  }
+  // Previous cleaner
+  if (a.previous === 'stuck') {
+    if (m.id === 'sp' || m.id === 'rx' || tpc) { s += 2; fit.push(m.id === 'sp' ? '“Unstickable” geared steering' : (tpc ? '“The one that won’t get stuck in corners” (brochure)' : 'Never gets stuck (brochure)')); }
+    else note.push('Previous cleaner got stuck: check steering adjustment and step accessories');
+  }
+  if (a.previous === 'noclimb' && m.walls === 'yes') { s += 1; fit.push(tpc ? 'Tyre treads designed for climbing' : 'Ticked for wall climbing'); }
+  if (a.previous === 'coverage') note.push('Poor coverage before: check hose length, hose weights or floats, and return-jet direction');
+  if (a.previous === 'slow') {
+    if (m.vtx) { s += 2; fit.push('Lower operating suction: about 18 kPa vs 25 kPa for Sprinta Plus and rX-Tank on a 1 hp pump (Kreepy Krauly training)'); }
+    else if (m.id === 'rx') setup.push('If it slows on low speed, raise the variable-speed low setting by about 200 rpm (manual)');
+    else if (tpc) { s += 1; setup.push('Fit the energy-saving throat insert so it runs on the pump’s low speed (brochure)'); }
+    else trial.push('Needs more operating suction than the VTX models (25 vs 18 kPa): trial on this pump');
+  }
+  // Budget (RRP bands of $500)
+  if (a.budget) {
+    const rrp = tpc && a.surface === 'tiled' ? 1050 : m.price, top = +a.budget, money = v => '$' + v.toLocaleString('en-AU');
+    if (rrp > top) { s -= 5; note.push('Above budget: RRP ' + money(rrp)); }
+    else if (rrp > top - 500) { s += 1; fit.push('RRP ' + money(rrp) + ' sits in the ' + (top === 500 ? 'up to $500' : money(top - 500) + '–' + money(top)) + ' range'); }
+    else fit.push('Under budget: RRP ' + money(rrp));
+  }
+  // Maintenance
+  if (a.maint === 'minimal') no.push('All debris goes to the skimmer basket and pool filter, so filter maintenance increases');
+  // Professional checks
+  if (m.kk) {
+    if (a.plate === 'std') fit.push('Smart-Skim adaptor for most vacuum plates is supplied');
+    if (a.plate === 'poly190') setup.push('Use the Polyplastics 190 / 210 Smart-Skim adaptor (supplied)');
+    if (a.plate === 'sk') setup.push('Use the Polyplastics SK1000 rectangular Smart-Skim adaptor (supplied)');
+    if (a.plate === 'poolrite') setup.push('Poolrite plate: thread the first fitting from the bottom, tapered side up, until flush (manual)');
+    if (a.plate === 'unknown') setup.push('Identify the vacuum plate to pick the right Smart-Skim adaptor (three supplied)');
+  } else if (a.plate) setup.push('Connect through the regulator valve and 90° connector supplied; check they fit this skimmer’s vacuum plate');
+  if (m.kk && a.skimBrand && a.skimBrand !== 'unknown' && a.debris !== 'heavy' && a.skim !== 'important') note.push('Auto Skim upgrade option: ' + autoSkim(m, a));
+  if (a.skimmers === 'more') setup.push('More than one skimmer: block off flow from the box not connected to the cleaner');
+  if (a.paths === 'open') setup.push('Close the main drain and other suction lines' + (m.kk ? ', or fit an Expanding Plug' : ''));
+  if (a.paths === 'other') trial.push('In-floor cleaning or another suction system: needs professional assessment');
+  if (a.pump === 'vs') fit.push(tpc ? 'Energy-saving throat insert lets it run on a variable-speed pump’s low speed (brochure)' : 'Ticked “tunes to variable speed pumps” in the range chart');
+  if (a.pump === 'single' && m.id === 'rx') fit.push('Zero extra running cost on single-speed pumps (brochure)');
+  if (a.pump === 'vs' && m.kk) setup.push('Variable-speed pump: set the cleaning hours about 200 rpm above the low speed (Kreepy Krauly training)');
+  const far = a.pumpDist === 'm25' || a.pumpDist === 'o25';
+  /* Pipe run and pipe size: Waterco training guidance (field experience, checked against PVC friction-loss estimates), not maker data */
+  if (a.pumpDist === 'o25') trial.push('Pipe run over 25 m: a suction cleaner becomes inefficient (Waterco training guidance). Consider a robotic cleaner');
+  if (a.pipe === '40' && far) trial.push('40 mm suction line over 10 m: a 1 hp pump may struggle to run the cleaner and stay primed (Waterco training guidance)');
+  if (a.pumpDist === 'm25' && a.pipe !== '40') setup.push('Pipe run 10–25 m: needs 50 mm suction lines and at least a 1–1.5 hp pump (Waterco training guidance)' + (a.pipe === 'unknown' || !a.pipe ? '. Check the pipe size' : ''));
+  if (far) {
+    if (m.vtx) { s += 1; fit.push('Lowest operating suction in the range (about 18 kPa on a 1 hp pump) leaves more margin over a long suction line (Kreepy Krauly training)'); }
+    else if (m.id === 'rx') setup.push(a.pump === 'vs' ? 'Long suction line adds plumbing losses: raise the variable-speed low setting by about 200 rpm (manual)' : 'Long suction line adds plumbing losses: check it moves and climbs at the installed suction (needs about 25 kPa, Kreepy Krauly training)');
+    else if (m.id === 'sp') setup.push('Long suction line adds plumbing losses: check it moves and climbs at the installed suction (needs about 25 kPa, Kreepy Krauly training)');
+    else setup.push('Long suction line adds plumbing losses: count the wheel RPM after install (minimum 8) and adjust the regulator valve (manual)');
+  }
+  if (a.pumpDist === 'unknown') setup.push('Check how far the pump and filter are from the skimmer: a long suction line reduces the vacuum at the cleaner');
+  if (a.previous === 'stops') note.push('Slowing after a few days usually means a loaded filter, not a faulty cleaner: backwash or clean the filter and empty the baskets first (manual troubleshooting)');
+  if (a.pumpCond === 'weak') {
+    if (m.vtx) setup.push('Manual: the pump and filter may be too small. Clean the filter and baskets and check suction first');
+    else if (tpc) trial.push('Needs at least 8 wheel RPM, about 18–25 cm Hg on a vacuum gauge (manual): check on this pump');
+    else trial.push('Needs more operating suction than the VTX models (25 vs 18 kPa): trial on this pump');
+  }
+  if (a.pumpCond === 'unknown') setup.push(tpc ? 'Check it reaches at least 8 wheel RPM once running (manual)' : 'Check pump, filter and baskets: an undersized or dirty system causes poor operation (manual)');
+  if (a.returns === 'across') setup.push('Return jets push it off course: point them down' + (m.kk ? ' or fit an Eyeball Diverter' : ''));
+  if (a.demo === 'worked') { s += 1; fit.push('Demonstrated in this pool'); }
+  if (a.demo === 'issues') trial.push('Previous in-pool demo had problems: resolve them before quoting');
+  const level = no.length ? 3 : (trial.length ? 2 : (setup.length ? 1 : 0));
+  const u = l => l.filter((x, i) => l.indexOf(x) === i);
+  return {fit: u(fit), setup: u(setup), trial: u(trial), no: u(no), note: u(note), score: s, level: level};
+}
+
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = {a: Object.assign({}, BLANK), pro: false}; }
+  renderVals() {
+    const a = this.state.a;
+    const set = (k, v) => this.setState({a: Object.assign({}, this.state.a, {[k]: v})});
+    const mkGroups = list => list.map(g => {
+      const qs = QS.filter(q => q.s === g.n);
+      const done = qs.every(q => a[q.k] !== '');
+      const some = qs.some(q => a[q.k] !== '');
+      return {n: g.n, title: g.title, sub: g.sub, border: done ? '#9CC3DD' : '#d7e3f1', badgeBg: done ? '#1565c0' : '#FFFFFF', badgeFg: done ? '#FFFFFF' : '#1565c0',
+        qs: qs.map(q => ({label: q.label, value: a[q.k], change: e => set(q.k, e.target.value), isVisual: !!q.visual, isSelect: !q.visual,
+          tiles: q.visual ? q.opts.map(o => { const on = a[q.k] === o[0]; const tile = {t: o[1], pressed: on ? 'true' : 'false', pick: () => set(q.k, on ? '' : o[0]),
+            border: on ? '#1565c0' : '#d7e3f1', bg: on ? '#e8f1fb' : '#FFFFFF', ink: on ? '#1565c0' : '#7d93b0', weight: on ? '800' : '600'}; tile['i_' + o[2]] = true; return tile; }) : [],
+          opts: [{v: '', t: 'Select…'}].concat(q.opts.map(o => ({v: o[0], t: o[1]})))})), some: some};
+    });
+    const res = MODELS.map(m => Object.assign({}, m, evaluate(m, a)));
+    res.sort((x, y) => x.level - y.level || y.score - x.score);
+    const answered = QS.filter(q => a[q.k] !== '').length;
+    const PENDING = {t: 'Not assessed yet', head: '#4a6283', border: '#d7e3f1'};
+    const cards = res.map((m, i) => {
+      const L = answered ? LEVELS[m.level] : PENDING;
+      const tiled = m.id === 'tpc' && a.surface === 'tiled', plain = m.id === 'tpc' && a.surface && a.surface !== 'tiled';
+      const code = tiled ? '326301 (tiled pools)' : (plain ? '326300 (fibreglass / concrete)' : m.code);
+      const price = tiled ? '$1,050' : (m.id === 'tpc' && !a.surface ? '$1,025 / $1,050' : '$' + m.price.toLocaleString('en-AU'));
+      return {name: m.name, full: m.full, img: m.img, brand: m.brand, code: code, type: m.type, warranty: m.warranty, features: m.features,
+        price: price,
+        hoseLine: m.hoseTxt,
+        outcome: L.t, bg: L.head, fg: '#FFFFFF', border: L.border, rankTxt: answered && i === 0 && m.level < 3 ? 'Best fit so far' : '',
+        fit: m.fit.slice(0, 6), setup: m.setup, trial: m.trial, no: m.no, note: m.note,
+        hasFit: m.fit.length > 0, hasSetup: m.setup.length > 0, hasTrial: m.trial.length > 0, hasNo: m.no.length > 0, hasNote: m.note.length > 0};
+    });
+    const counts = [0, 0, 0, 0]; res.forEach(m => counts[m.level]++);
+    const why = [];
+    if (a.coverage === 'waterline') why.push('The owner expects waterline cleaning.');
+    if (a.coverage === 'steps') why.push('The owner expects the steps cleaned.');
+    if (a.maint === 'minimal') why.push('The owner wants minimal filter load.');
+    if (a.debris === 'heavy') why.push('The pool gets heavy leaf loads.');
+    if (a.pumpDist === 'o25') why.push('The pipe run from pump to skimmer is over 25 m; a robot doesn’t rely on the pool’s plumbing.');
+    const showRobot = a.maint === 'minimal' || a.pumpDist === 'o25' || a.coverage === 'waterline' || counts[3] === MODELS.length || (a.coverage === 'steps' && counts[0] + counts[1] === 0);
+    return {
+      legend: LEVELS.map(l => ({t: l.t, d: l.d, bg: l.bg, fg: l.fg})),
+      groups: mkGroups(SEC), proGroups: mkGroups(PRO),
+      proOpen: this.state.pro, proBtn: this.state.pro ? 'Hide checks' : 'Show checks',
+      togglePro: () => this.setState({pro: !this.state.pro}),
+      answered: answered, qTotal: QS.length,
+      summary: answered ? [counts[0] + ' suitable', counts[1] + ' with setup', counts[2] + ' trial needed', counts[3] + ' not matched'].join(' · ') : 'Answer the questions; results update as you go.',
+      cards: cards,
+      showRobot: showRobot, robotWhy: why.join(' '),
+      showCanister: a.debris === 'heavy' || a.debris === 'light',
+      canisterWhy: a.debris === 'heavy' ? 'Heavy leaf loads can fill the skimmer basket quickly. A leaf canister in the cleaner’s hose line catches leaves before they reach the skimmer, so the basket stays clear and the cleaner keeps its suction.' : 'Optional for leafy pools: a leaf canister in the cleaner’s hose line catches leaves before they reach the skimmer basket.',
+      canisters: CANISTERS.map((c, i) => ({code: c.code, name: c.name, use: c.use, price: '$' + c.price, best: a.debris === 'heavy' ? i === 0 : i === 1})),
+      reset: () => { this.setState({a: Object.assign({}, BLANK), pro: false}); try { window.scrollTo(0, 0); } catch (e) {} }
+    };
+  }
+}
+</script>
+<script src="dc-lite.js"></script>
+</body>
+</html>
