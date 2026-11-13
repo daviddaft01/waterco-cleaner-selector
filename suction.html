@@ -20,7 +20,7 @@ select:focus,button:focus-visible,a:focus-visible{outline:3px solid #ffb547;outl
     <svg aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none" style="position: absolute; left: 0; bottom: 0; width: 100%; height: 60px; opacity: 0.25"><path d="M0 70 C240 20 480 110 720 60 C960 10 1200 100 1440 50 L1440 120 L0 120 Z" fill="#7cc4ff"></path></svg>
     <div style="position: relative; max-width: 1360px; margin: 0 auto; padding: 22px 32px 26px; box-sizing: border-box; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px">
       <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px">
-        <div style="flex: none; background: #FFFFFF; border-radius: 10px; padding: 8px 14px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.12)"><img src="images/waterco-advance-logo.png" alt="Waterco Advance" style="height: 64px; width: auto; display: block"></div>
+        <div style="flex: none; background: #FFFFFF; border-radius: 10px; padding: 8px 14px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.12)"><img src="waterco-advance-logo.png" alt="Waterco Advance" style="height: 64px; width: auto; display: block"></div>
         <div style="display: flex; flex-direction: column; gap: 6px">
           <div style="font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Trade counter &amp; field · AU &amp; NZ · Stage 2: suction cleaners (draft)</div>
           <h1 style="margin: 0; font-size: 42px; font-weight: 800; line-height: 1">Suction Cleaner Selector</h1>
@@ -234,7 +234,7 @@ select:focus,button:focus-visible,a:focus-visible{outline:3px solid #ffb547;outl
       </section>
     </div>
   </main>
-  <footer aria-label="Supplied by Waterco and Davey" style="background: #FFFFFF; border-top: 1px solid #d7e3f1"><div style="max-width: 1200px; margin: 0 auto; padding: 18px 24px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 28px"><span style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #4a6283">Supplied by</span><img src="images/waterco-logo.png" alt="Waterco: water, the liquid of life" style="height: 40px; width: auto; display: block"><img src="images/davey-logo.png" alt="Davey" style="height: 28px; width: auto; display: block; border-radius: 4px"></div></footer>
+  <footer aria-label="Supplied by Waterco and Davey" style="background: #FFFFFF; border-top: 1px solid #d7e3f1"><div style="max-width: 1200px; margin: 0 auto; padding: 18px 24px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 28px"><span style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #4a6283">Supplied by</span><img src="waterco-logo.png" alt="Waterco: water, the liquid of life" style="height: 40px; width: auto; display: block"><img src="davey-logo.png" alt="Davey" style="height: 28px; width: auto; display: block; border-radius: 4px"></div></footer>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2200}}'>
@@ -242,31 +242,31 @@ const IMG = id => '/_blob/' + id;
 /* Suction range. Kreepy Krauly: owner's manuals, brochures, rX-Tank brochure range chart, NZ training deck; codes and RRP from Waterco (Nov 2026).
    The PoolCleaner: 2-wheel owner's manual and brochure; codes and RRP from the Waterco catalogue. */
 const MODELS = [
-  {id: 'rx', kk: 1, brand: 'Kreepy Krauly · Davey', name: 'rX-Tank PRO', full: 'Kreepy Krauly rX-Tank PRO', img: 'images/kk-rx-tank-pro.png', code: 'KKRXTANKPRO', price: 850,
+  {id: 'rx', kk: 1, brand: 'Kreepy Krauly · Davey', name: 'rX-Tank PRO', full: 'Kreepy Krauly rX-Tank PRO', img: 'kk-rx-tank-pro.png', code: 'KKRXTANKPRO', price: 850,
     type: 'Robotic crossover suction cleaner: turbine drives tracks and dual active power brushes',
     hoseM: 10, extraM: 1, hoseTxt: '10 m Ultra Flex hose, 1 hose weight', extraTxt: 'one extra 1 m length',
     walls: 'yes', heavy: 1, scrub: 0, brushes: 1, angled: 1, vtx: 0, blanket: 1,
     warranty: '2 yr full system + 10 yr flow turbine',
     features: ['X-NAV dual-drive navigation; Power Steering Halo for multi-angle wall traction', 'Pro Clean Power Brushes and Grip Tracks; Power Vortex Suction', 'Halo Pump Protector; Turbo Cleaning Cycle', 'Never gets stuck; works under pool blankets', 'Tunes to any variable-speed pump; zero extra running cost on single-speed pumps']},
-  {id: 'sp', kk: 1, brand: 'Kreepy Krauly · Davey', name: 'Sprinta Plus', full: 'Kreepy Krauly Sprinta Plus', img: 'images/kk-sprinta-plus.png', code: 'KKSP10', price: 689,
+  {id: 'sp', kk: 1, brand: 'Kreepy Krauly · Davey', name: 'Sprinta Plus', full: 'Kreepy Krauly Sprinta Plus', img: 'kk-sprinta-plus.png', code: 'KKSP10', price: 689,
     type: 'Straight-through turbine with geared Intelligent Steering; no wheels or tracks',
     hoseM: 10, extraM: 1, hoseTxt: '10 m Ultra Flex hose, 3 hose weights', extraTxt: 'one extra 1 m length',
     walls: 'conflict', heavy: 1, scrub: 0, brushes: 0, angled: 1, vtx: 0, blanket: 0,
     warranty: '2 yr full system + 10 yr flow turbine',
     features: ['“Unstickable”: corners, stairs and ladders are not a problem', 'Straight-through turbine handles heavy leaf loads without choking', 'Enclosed gears: sand and grit can’t slow it', 'Smart-Skim standard; Auto Skim upgrade optional']},
-  {id: 'v7', kk: 1, brand: 'Kreepy Krauly · Davey', name: 'VTX-7', full: 'Kreepy Krauly VTX-7', img: 'images/kk-vtx-7.png', code: 'KKVTX7', price: 775,
+  {id: 'v7', kk: 1, brand: 'Kreepy Krauly · Davey', name: 'VTX-7', full: 'Kreepy Krauly VTX-7', img: 'kk-vtx-7.png', code: 'KKVTX7', price: 775,
     type: 'Vortex cleaner: Flow Drive is its single moving part',
     hoseM: 12, extraM: 1.5, hoseTxt: '12 m Ultra Flex hose, 3 hose weights', extraTxt: 'about 1.5 m extra',
     walls: 'yes', heavy: 1, scrub: 1, brushes: 0, angled: 0, vtx: 1, blanket: 0,
     warranty: '2 yr full system + 10 yr flow turbine',
     features: ['Triple clean: vortex vacuum, scrubbing silicon seal and Smart-Skim', 'Perfect for big pools and large leaf loads; oversized leaf scoop', 'Crisscross pattern with adjustable steering; best on curved walls', 'Accessories: step deflector, extended float bar, main drain cover, roller bumper strap']},
-  {id: 'v3', kk: 1, brand: 'Kreepy Krauly · Davey', name: 'VTX-3', full: 'Kreepy Krauly VTX-3', img: 'images/kk-vtx-3.png', code: 'KKVTX3', price: 449,
+  {id: 'v3', kk: 1, brand: 'Kreepy Krauly · Davey', name: 'VTX-3', full: 'Kreepy Krauly VTX-3', img: 'kk-vtx-3.png', code: 'KKVTX3', price: 449,
     type: 'Compact vortex cleaner: smaller body and pipes',
     hoseM: 10, extraM: 1.5, hoseTxt: '10 m Ultra Flex hose, 2 hose weights', extraTxt: 'about 1.5 m extra',
     walls: 'yes', heavy: 0, scrub: 1, brushes: 0, angled: 0, vtx: 1, blanket: 0, compact: 1,
     warranty: '2 yr full system + 10 yr flow turbine',
     features: ['Same vortex technology as the VTX-7 in a smaller body for compact pools', 'Side leaf scoops for light to medium leaf loads', 'Scrubbing seal removes algae and calcium build-up', 'Deflector supplied for above-ground pools; hose thruster accessory for problem steps']},
-  {id: 'tpc', kk: 0, brand: 'The PoolCleaner · Waterco', name: 'The PoolCleaner 2-Wheel', full: 'The PoolCleaner 2-Wheel', img: 'images/the-poolcleaner.png', code: '326300 · tiled 326301', price: 1025,
+  {id: 'tpc', kk: 0, brand: 'The PoolCleaner · Waterco', name: 'The PoolCleaner 2-Wheel', full: 'The PoolCleaner 2-Wheel', img: 'the-poolcleaner.png', code: '326300 · tiled 326301', price: 1025,
     type: 'Turbine-driven 2-wheel cleaner with patented steering, adjustable skirts and tyre treads',
     hoseM: 10, extraM: 2, hoseTxt: '10 hose sections + leader hose, 2 floats, 90° connector, regulator valve', extraTxt: 'one to two extra lengths',
     walls: 'yes', heavy: 1, scrub: 0, brushes: 0, angled: 1, vtx: 0, blanket: 0,
