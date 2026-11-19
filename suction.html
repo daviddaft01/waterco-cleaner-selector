@@ -142,10 +142,17 @@ select:focus,button:focus-visible,a:focus-visible{outline:3px solid #ffb547;outl
         <sc-if value="{{showRobot}}" hint-placeholder-val="{{ false }}">
           <div style="background: #FFF6E6; border: 2px solid #ffb547; border-radius: 14px; padding: 16px 20px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center">
             <div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 4px">
-              <span style="font-size: 18px; font-weight: 800">Worth comparing a robotic cleaner</span>
+              <span style="font-size: 18px; font-weight: 800">{{robotTitle}}</span>
               <span style="font-size: 15px; line-height: 1.45; color: #5C3A00">{{robotWhy}} Robotic cleaners collect debris in an onboard basket, so they don’t add to the load on the pool filter. An option to discuss, not a recommendation.</span>
             </div>
             <a href="robotic.html" style="min-height: 48px; padding: 0 20px; border-radius: 10px; background: #0b2e59; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none; display: flex; align-items: center">Compare robotic cleaners →</a>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{showClose}}" hint-placeholder-val="{{ false }}">
+          <div style="background: #e8f1fb; border: 1px solid #9CC3DD; border-radius: 14px; padding: 14px 18px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+            <span style="flex: 1 1 300px; font-size: 15px; line-height: 1.45; color: #24456e">{{closeTxt}}</span>
+            <a href="robotic.html" style="min-height: 44px; padding: 0 16px; border-radius: 10px; border: 1px solid #0b2e59; color: #0b2e59; font-size: 15px; font-weight: 700; text-decoration: none; display: flex; align-items: center">Robotic selector →</a>
           </div>
         </sc-if>
 
@@ -293,6 +300,9 @@ const autoSkim = (m, a) => {
   const k = AUTOSKIM.find(x => x[0] === a.skimBrand);
   return k ? 'kit ' + k[0] + ' for ' + k[1] + ' (' + k[2] + '), ' + spring : 'kit KK65–KK72.3 by skimmer box brand (see Skimmer & suction paths), ' + spring;
 };
+/* Entry robots in the Waterco robotic selector (RRP AUD). Update here if robot prices change. */
+const ROBOT_ENTRY = [['F1 Sonic Pro Plus', 1549], ['F1 Sonic Pro', 1599], ['TurboSweep', 1599], ['F1 R', 1899]];
+const ROBOT_CLOSE = ['BWT myPool Quick', 1049];
 const DIST = []; for (let d = 4; d <= 16; d++) DIST.push([String(d), d + ' m']);
 const QS = [
   {k: 'surface', s: 1, label: 'Pool surface', opts: [['pebble', 'Pebblecrete / Quartzon'], ['concrete', 'Concrete / plaster / render'], ['painted', 'Painted'], ['tiled', 'Fully tiled'], ['fibre', 'Fibreglass'], ['vinyl', 'Vinyl liner']]},
@@ -309,7 +319,7 @@ const QS = [
   {k: 'blanket', s: 4, label: 'Pool blanket used?', opts: [['no', 'No'], ['yes', 'Yes']]},
   {k: 'previous', s: 4, label: 'Previous cleaner', opts: [['none', 'None, or no problems'], ['stuck', 'Kept getting stuck'], ['noclimb', 'Didn’t climb walls'], ['coverage', 'Missed areas / poor coverage'], ['slow', 'Stalled or slow on a variable-speed pump'], ['stops', 'Worked, then slowed or stopped after a few days']]},
   {k: 'maint', s: 4, label: 'Filter maintenance', opts: [['ok', 'Happy to empty baskets and clean the filter more often'], ['minimal', 'Wants minimal filter load / set and forget']]},
-  {k: 'budget', s: 4, label: 'Budget (RRP, AUD)', opts: [['500', 'Up to $500'], ['1000', '$500 – $1,000'], ['1500', '$1,000 – $1,500']]},
+  {k: 'budget', s: 4, label: 'Budget (RRP, AUD)', opts: [['500', 'Up to $500'], ['1000', '$500 – $1,000'], ['1500', '$1,000 – $1,500'], ['2000', '$1,500 – $2,000']]},
   {k: 'plate', s: 5, label: 'Vacuum plate', opts: [['std', 'Standard round plate'], ['poly190', 'Polyplastics 190 / 210'], ['sk', 'Polyplastics SK1000 (rectangular)'], ['poolrite', 'Poolrite'], ['unknown', 'Not identified']]},
   {k: 'skimBrand', s: 5, label: 'Skimmer box brand (Auto Skim kit)', opts: AUTOSKIM.map(x => [x[0], x[1] + ' (' + x[2] + ')']).concat([['unknown', 'Not identified']])},
   {k: 'skimmers', s: 5, label: 'Number of skimmers', opts: [['one', 'One'], ['more', 'More than one']]},
@@ -537,8 +547,11 @@ class Component extends DCLogic {
     if (a.coverage === 'steps') why.push('The owner expects the steps cleaned.');
     if (a.maint === 'minimal') why.push('The owner wants minimal filter load.');
     if (a.debris === 'heavy') why.push('The pool gets heavy leaf loads.');
+    const money = v => '$' + v.toLocaleString('en-AU');
+    const tpcPrice = a.surface === 'tiled' ? 1050 : (MODELS.find(m => m.id === 'tpc') || {price: 1025}).price;
+    if (a.budget === '2000') why.push('The budget is $1,500–$2,000, which covers the entry robots: ' + ROBOT_ENTRY.map(r => r[0] + ' ' + money(r[1])).join(', ') + '.');
     if (a.pumpDist === 'o25') why.push('The pipe run from pump to skimmer is over 25 m; a robot doesn’t rely on the pool’s plumbing.');
-    const showRobot = a.maint === 'minimal' || a.pumpDist === 'o25' || a.coverage === 'waterline' || counts[3] === MODELS.length || (a.coverage === 'steps' && counts[0] + counts[1] === 0);
+    const showRobot = a.budget === '2000' || a.maint === 'minimal' || a.pumpDist === 'o25' || a.coverage === 'waterline' || counts[3] === MODELS.length || (a.coverage === 'steps' && counts[0] + counts[1] === 0);
     return {
       legend: LEVELS.map(l => ({t: l.t, d: l.d, bg: l.bg, fg: l.fg})),
       groups: mkGroups(SEC), proGroups: mkGroups(PRO),
@@ -548,6 +561,9 @@ class Component extends DCLogic {
       summary: answered ? [counts[0] + ' suitable', counts[1] + ' with setup', counts[2] + ' trial needed', counts[3] + ' not matched'].join(' · ') : 'Answer the questions; results update as you go.',
       cards: cards,
       showRobot: showRobot, robotWhy: why.join(' '),
+      robotTitle: a.budget === '2000' ? 'Has the customer considered a robotic cleaner?' : 'Worth comparing a robotic cleaner',
+      showClose: a.budget === '1500',
+      closeTxt: 'The PoolCleaner (' + money(tpcPrice) + ') and the ' + ROBOT_CLOSE[0] + ' robot (' + money(ROBOT_CLOSE[1]) + ') are almost the same price. Worth comparing both with the customer.',
       showCanister: a.debris === 'heavy' || a.debris === 'light',
       canisterWhy: a.debris === 'heavy' ? 'Heavy leaf loads can fill the skimmer basket quickly. A leaf canister in the cleaner’s hose line catches leaves before they reach the skimmer, so the basket stays clear and the cleaner keeps its suction.' : 'Optional for leafy pools: a leaf canister in the cleaner’s hose line catches leaves before they reach the skimmer basket.',
       canisters: CANISTERS.map((c, i) => ({code: c.code, name: c.name, use: c.use, price: '$' + c.price, best: a.debris === 'heavy' ? i === 0 : i === 1})),

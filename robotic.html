@@ -161,6 +161,16 @@ select:focus,button:focus-visible{outline:3px solid #ffb547;outline-offset:2px}
         <div style="margin-top: -10px; font-size: 15px; color: #33475A">Pool: <strong>{{poolLine}}</strong></div>
       </sc-if>
 
+      <sc-if value="{{showSuction}}" hint-placeholder-val="{{ false }}">
+        <div style="background: #FFF6E6; border: 2px solid #ffb547; border-radius: 14px; padding: 16px 20px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center">
+          <div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 4px">
+            <span style="font-size: 18px; font-weight: 800">{{suctionTitle}}</span>
+            <span style="font-size: 15px; line-height: 1.45; color: #5C3A00">{{suctionTxt}} An option to discuss, not a recommendation.</span>
+          </div>
+          <a href="suction.html" style="min-height: 48px; padding: 0 20px; border-radius: 10px; background: #0b2e59; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none; display: flex; align-items: center">Compare suction cleaners →</a>
+        </div>
+      </sc-if>
+
       <sc-if value="{{noFit}}" hint-placeholder-val="{{ false }}">
         <div style="background: #FFFFFF; border: 1px solid #D5DEE5; border-radius: 14px; padding: 24px">
           <h3 style="margin: 0 0 8px; font-size: 21px">No cleaner in the range ticks every box</h3>
@@ -532,6 +542,16 @@ for (let i = 1; i <= BAND_MAX; i++) BANDS[i] = i === 1 ? 'under $500' : '$' + ((
 function band(p) { return Math.min(BAND_MAX, Math.floor(p / 500) + 1); }
 const BUDGET_OPTS = [['0', 'Show all']].concat(Object.keys(BANDS).map(k => [k, BANDS[k].charAt(0).toUpperCase() + BANDS[k].slice(1)]));
 function money(p) { return p ? '$' + p.toLocaleString('en-AU') : 'TBC'; }
+/* Waterco suction range (RRP AUD): Kreepy Krauly VTX-3 $449 up to The PoolCleaner (tiled) $1,050. Update here if suction prices change. */
+const SUCTION_FROM = 449, SUCTION_TO = 1050;
+/* Budget under $1,500: suggest a suction cleaner as well. */
+function suctionNudge(b) {
+  if (!b || b > 3) return null;
+  const top = b * 500, fit = MODELS.filter(m => m.price && m.price <= top).sort((x, y) => x.price - y.price);
+  const robots = fit.length ? 'In this budget the only ' + (fit.length > 1 ? 'robots are ' : 'robot is the ') + fit.map(m => m.brand + ' ' + m.name + ' (' + money(m.price) + ')').join(', ') + '.' : 'No robot in the Waterco range is under ' + money(top) + '.';
+  return {title: fit.length ? 'Has the customer considered a suction cleaner?' : 'No robot fits this budget: consider a suction cleaner',
+    txt: robots + ' Waterco’s suction cleaners are ' + money(SUCTION_FROM) + '–' + money(SUCTION_TO) + ' RRP and run off the pool pump: no charging, no lifting out, no power lead.'};
+}
 /* Waterco AU & NZ trade range, Stage 1 robots. RRP: confirm against the Waterco price list. Warranty: Waterco / Davey product pages. 0, null or '' = to confirm. */
 const IMG = id => '/_blob/' + id;
 const MODELS = [
@@ -560,7 +580,8 @@ const CODES = {'F1 R': '326430', 'F1 RX': '326431 · Blue 326441', 'F1 RXT': '32
 MODELS.forEach(function (m) { m.code = CODES[m.name] || 'TBC'; });
 MODELS.forEach(function (m) { if (m.name === 'Dolphin Liberty 600') m.stockNote = 'Available while stocks last: confirm stock before quoting'; });
 const SKIMMERS = [
-  {b: 'Beatbot', name: 'iSkim', price: 699, wty: '3 yr', isNew: 0, img: 'beatbot-iskim.png', info: 'Code 326469 · solar · 28+ hr on battery · auto-parks at the edge · 6.6 kg · no charger included'}
+  {b: 'Beatbot', name: 'iSkim', price: 699, wty: '3 yr', isNew: 0, img: 'beatbot-iskim.png', info: 'Code 326469 · solar · 28+ hr on battery · auto-parks at the edge · 6.6 kg · no charger included'},
+  {b: 'BWT', name: 'ES BewaSkim', price: 799, wty: '3 yr', isNew: 1, img: 'bwt-es-bewaskim.png', info: 'Code 125701858 · solar + DC charger included, Sun-Seeker · up to 44 hr per charge · 6 L basket, 150 µm, chlorine tablet holder · edge mode · 4 anti-stuck bars for steps and ledges · 5.3 kg · BWT Robotics app (2.4 GHz Wi-Fi) · min depth 14 cm · water 5–35 °C'}
 ];
 /* Extra selection data from supplier brochures and supplier-confirmed answers.
    maxW = rated pool width (m), areaM2 = rated area, cableM = cable length (m), ledgeCm = shallowest ledge it is rated to clean,
@@ -604,7 +625,9 @@ function slippery(a) {
 }
 /* Floating skimmer pairing with the recommended robot (supplier brochures). */
 const SKPATCH = {
-  'iSkim': {app: 'Beatbot', rescue: 1, minD: 0.15, noCorded: 'No floating-cable detection: run at a different time from the corded robot'}
+  'iSkim': {app: 'Beatbot', rescue: 1, minD: 0.15, noCorded: 'No floating-cable detection: run at a different time from the corded robot'},
+  /* BWT ES BewaSkim brochure and manual: BWT Robotics app; 4 ultrasonic sensors, edge mode; 4 anti-stuck bars for steps or ledges under about 13 cm; minimum water depth 14 cm; not at the same time as a corded robot. */
+  'ES BewaSkim': {app: 'BWT Robotics', obst: 1, rescue: 1, minD: 0.14, noCorded: 'Don’t run it at the same time as a corded robot: the manual warns of tangling'}
 };
 SKIMMERS.forEach(function (k) { Object.assign(k, SKPATCH[k.name] || {}); });
 const ROBOT_APP = {'TurboSweep': 'Davey', 'Dolphin Liberty 600': 'Maytronics One', 'F1 R': 'BWT Robotics', 'F1 RX': 'BWT Robotics', 'F1 RXT': 'BWT Robotics', 'F1 Sonic Pro': 'BWT Robotics', 'F1 Sonic Pro Plus': 'BWT Robotics', 'My Pool Quick': 'BWT Robotics', 'Sora 70': 'Beatbot', 'AquaSense 2 Ultra': 'Beatbot'};
@@ -1250,6 +1273,7 @@ class Component extends DCLogic {
       brandNote: br.length ? 'Showing ' + br.length + ' of ' + BRANDS.length + ' brands · saved on this computer' : 'Showing the full Waterco range · tap brands to match what you stock',
       fitCount: res.length,
       noFit: res.length === 0,
+      showSuction: !!suctionNudge(+av.budget), suctionTitle: (suctionNudge(+av.budget) || {}).title, suctionTxt: (suctionNudge(+av.budget) || {}).txt,
       noFitWhy: noFitWhy, hasWhy: noFitWhy.length > 0, noWhy: !noFitWhy.length,
       hasTop: res.length > 0,
       top: top || card(Object.assign({}, MODELS[0], {score: 0, why: [], chk: [], fit: null})),

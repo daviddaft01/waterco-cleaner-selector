@@ -106,18 +106,18 @@ button:focus-visible,select:focus-visible{outline:3px solid #ffb547;outline-offs
     </div>
 
     <section style="display: flex; flex-direction: column; gap: 12px">
-      <h2 style="margin: 8px 0 0; font-family: 'Inter', system-ui, sans-serif; font-size: 30px; font-weight: 700">Floating skimmer — add-on for very leafy pools</h2>
+      <h2 style="margin: 8px 0 0; font-family: 'Inter', system-ui, sans-serif; font-size: 30px; font-weight: 700">Floating skimmers — add-on for very leafy pools</h2>
       <div style="background: #FFFFFF; border: 1px solid #D5DEE5; border-radius: 14px; overflow-x: auto">
-        <div style="min-width: 1000px; font-size: 14px">
-          <div style="display: grid; grid-template-columns: 140px 220px 100px 100px 280px 100px 90px 90px; background: #0b2e59; color: #FFFFFF; font-weight: 700; font-size: 13px">
-            <div style="padding: 12px 10px">Brand</div><div style="padding: 12px 10px">Model</div><div style="padding: 12px 10px">RRP (AUD)</div><div style="padding: 12px 10px">Warranty</div><div style="padding: 12px 10px">Power</div><div style="padding: 12px 10px">Basket</div><div style="padding: 12px 10px">App</div><div style="padding: 12px 10px">Weight</div>
+        <div style="min-width: 1200px; font-size: 14px">
+          <div style="display: grid; grid-template-columns: 110px 210px 100px 90px minmax(170px, 1.3fr) 120px minmax(150px, 1fr) minmax(150px, 1fr) 100px; background: #0b2e59; color: #FFFFFF; font-weight: 700; font-size: 13px">
+            <div style="padding: 12px 10px">Brand</div><div style="padding: 12px 10px">Model</div><div style="padding: 12px 10px">RRP (AUD)</div><div style="padding: 12px 10px">Warranty</div><div style="padding: 12px 10px">Power</div><div style="padding: 12px 10px">Runtime</div><div style="padding: 12px 10px">Debris capture</div><div style="padding: 12px 10px">App</div><div style="padding: 12px 10px">Weight</div>
           </div>
           <sc-for list="{{skims}}" as="k" hint-placeholder-count="5">
-            <div style="display: grid; grid-template-columns: 140px 220px 100px 100px 280px 100px 90px 90px; border-top: 1px solid #E1E8EE">
+            <div style="display: grid; grid-template-columns: 110px 210px 100px 90px minmax(170px, 1.3fr) 120px minmax(150px, 1fr) minmax(150px, 1fr) 100px; border-top: 1px solid #E1E8EE">
               <div style="padding: 10px; font-weight: 600">{{k.b}}</div>
-              <div style="padding: 10px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap"><span style="font-weight: 700">{{k.name}}</span>
+              <div style="padding: 10px; display: flex; gap: 6px; align-items: flex-start; flex-wrap: wrap"><span style="font-weight: 700">{{k.name}}</span>
                 <sc-if value="{{k.isNew}}" hint-placeholder-val="{{ false }}"><span style="background: #ffb547; color: #0b2e59; border-radius: 999px; padding: 1px 8px; font-size: 11px; font-weight: 700">NEW</span></sc-if>              </div>
-              <sc-for list="{{k.cells}}" as="c" hint-placeholder-count="6">
+              <sc-for list="{{k.cells}}" as="c" hint-placeholder-count="7">
                 <div style="padding: 10px"><span style="color: {{c.fg}}; background: {{c.bg}}; border-radius: 4px; padding: 1px 4px; font-weight: {{c.fw}}">{{c.v}}</span></div>
               </sc-for>
             </div>
@@ -160,10 +160,10 @@ button:focus-visible,select:focus-visible{outline:3px solid #ffb547;outline-offs
           </sc-for>
         </div>
         <sc-if value="{{pp.showSkims}}" hint-placeholder-val="{{ false }}">
-          <div style="margin-top: 8px; font-family: 'Inter', system-ui, sans-serif; font-size: 1.5em; font-weight: 700">Floating skimmer: add-on for very leafy pools</div>
+          <div style="margin-top: 8px; font-family: 'Inter', system-ui, sans-serif; font-size: 1.5em; font-weight: 700">Floating skimmers: add-on for very leafy pools</div>
           <div class="pt">
             <div class="pth"><div class="ptr">
-              <div class="ptc">Model</div><div class="ptc">RRP (AUD)</div><div class="ptc">Warranty</div><div class="ptc">Power</div><div class="ptc">Filter</div><div class="ptc">App</div><div class="ptc">Weight</div>
+              <div class="ptc">Model</div><div class="ptc">RRP (AUD)</div><div class="ptc">Warranty</div><div class="ptc">Power</div><div class="ptc">Runtime</div><div class="ptc">Debris capture</div><div class="ptc">App</div><div class="ptc">Weight</div>
             </div></div>
             <sc-for list="{{skims}}" as="k" hint-placeholder-count="5">
               <div class="ptr">
@@ -198,7 +198,8 @@ const MODELS = [
 const CODES = {'F1 R': '326430', 'F1 RX': '326431 · Blue 326441', 'F1 RXT': '326449', 'F1 Sonic Pro': '326438', 'F1 Sonic Pro Plus': '326450', 'My Pool Quick': '326465', 'AquaSense 2 Ultra': '326474', 'Sora 70': '326470 (Gray)', 'Dolphin Liberty 600': '99998600-AU (while stocks last)', 'TurboSweep': '326442 · skimmer 326443 via your Account Manager'};
 MODELS.forEach(function (m) { m.code = CODES[m.name] || 'TBC'; });
 const SKIMMERS = [
-  {b: 'Beatbot', name: 'iSkim (326469)', price: 699, wty: '3 yr', power: 'Solar · 28+ hr on battery · no charger included', basket: '29 x 270 mm wide inlet', app: 'Yes', weight: '6.6 kg'}
+  {b: 'Beatbot', name: 'iSkim (326469)', price: 699, wty: '3 yr', power: 'Solar; no charger included', run: '28+ hr on battery', basket: '29 × 270 mm wide inlet', app: 'Yes', weight: '6.6 kg'},
+  {b: 'BWT', name: 'ES BewaSkim (125701858)', isNew: 1, price: 799, wty: '3 yr', power: 'Solar + DC charger included; Sun-Seeker', run: 'Up to 44 hr per charge', basket: '6 L basket · 150 µm', app: 'BWT Robotics: weekly schedule, manual control (2.4 GHz Wi-Fi)', weight: '5.3 kg'}
 ];
 /* Extra selection data from supplier brochures and supplier-confirmed answers.
    maxW = rated pool width (m), areaM2 = rated area, cableM = cable length (m), ledgeCm = shallowest ledge it is rated to clean,
@@ -358,7 +359,7 @@ class Component extends DCLogic {
       groups: groups,
       tabs: tabs,
       skims: SKIMMERS.map(k => ({b: k.b, name: k.name, isNew: !!k.isNew,
-        cells: [cell(money(k.price), true), cell(k.wty, true), cell(k.power || ''), cell(k.basket || ''), cell(k.app || ''), cell(k.weight || '')]}))
+        cells: [cell(k.price ? money(k.price) : '', true), cell(k.wty, true), cell(k.power || ''), cell(k.run || ''), cell(k.basket || ''), cell(k.app || ''), cell(k.weight || '')]}))
     };
   }
 }
